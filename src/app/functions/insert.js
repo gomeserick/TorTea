@@ -1,15 +1,14 @@
 const mongoose = require('mongoose')
 
-require("../Schemas/nodeSchema");
-const Node = mongoose.model("nodes");
-
+const validate = require('./ValidateIpAdress')
 
 /**
- * Create a document in MongoDB for every given ip,
+ * Create a document in MongoDB for an ip,
  * But only if the ip isn't already in the database
  * @param {*} element ip to save
+ * @param {mongoose.Model} Model Model from collection to save
  */
-function insert(element){
+function insert(element, Model) {
     // Filters based on ip
     const filter = { ip: element };
 
@@ -22,10 +21,11 @@ function insert(element){
         upsert: true
     };
     //checks if the element is null
-    if(element == null) return;
-        // Query Function
-        Node.findOneAndUpdate(filter, update, options).catch(error => 
-            console.log(error))
+    if (!validate(element)) return;
+    // Query Function
+    Model.findOneAndUpdate(filter, update, options).catch(error =>
+        console.log(error))
+
 }
 
 

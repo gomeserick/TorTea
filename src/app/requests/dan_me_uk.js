@@ -1,29 +1,32 @@
 const axios = require('axios');
 
+const insert = require('../functions/insert')
 
-/*async function getFromDan() {
-        axios.get(/*'https://www.dan.me.uk/torlist/').then(res => {
-            const data = res.data.split(" ")
+const mongoose = require('mongoose');
+require("../Schemas/nodeSchema")
+const Nodes = mongoose.model("nodes")
+
+
+function getFromDan() {
+    console.log("Getting ips from https://www.dan.me.uk/torlist/")
+
+    // Request the data from https://www.dan.me.uk/torlist/
+    try {
+        axios.get('https://www.dan.me.uk/torlist/').then(res => {
+
+            const data = res.data.split("\n")
             data.forEach(element => {
-                const filter = { ip: element };
-                // New variable for reading propourse, but it is unnecessary
-                const update = { ip: element }
-                const options = {
-                    upsert: true
-                };
-                try {
-                    Node.findOneAndUpdate(filter, update, options, ).then((err, data) => {
-                        
-                    }).catch(error => console.log(error))
-                } catch (error) {
-                    console.log(error)
-                }
+                insert(element, Nodes)
             })
         }).catch(err => {
             console.log(err)
         })
+    } catch (err) {
+        console.log(err)
     }
 
+}
 
 
-module.exports = getFromDan();*/
+
+module.exports = getFromDan();

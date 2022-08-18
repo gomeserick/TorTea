@@ -4,7 +4,6 @@ const handlebars = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
 
-const dan = require('./requests/dan_me_uk')
 const app = express();
 
 
@@ -26,9 +25,9 @@ const app = express();
 
     //Mongoose
     mongoose.connect("mongodb://localhost/TeaBag").then(() =>{
-            console.log("Mongo conectado");
+            console.log("Mongo connected");
         }).catch((erro) => {
-            console.log("Erro ao conectar o Mongo" + erro)
+            console.log("Error trying to connect mongo: " + erro)
         })
         mongoose.Promise = global.Promise;
 
