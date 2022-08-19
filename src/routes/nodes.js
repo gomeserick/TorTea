@@ -17,7 +17,7 @@ var time = +new Date();
 var ipList = []
 
 //Loads the data for the first time
-const data = requester();
+var data = requester();
 
 // Task #1, Endpoint GET
 router.get('/allips', async(req, res) => {
@@ -38,7 +38,11 @@ router.get('/', (req, res) => {
 router.post('/remove', (req, res) => {
     // Inserts unwanted data on mongodb
     if (insert(req.body.ip, Unwanted)) {
-        res.send(201).redirect('/v1/nodes')
+        req.flash("success_msg", "The IP will not appear on IP list anymore")
+        res.redirect('/v1/nodes')
+    } else {
+        req.flash("error_msg", "You entered an invalid IP")
+        res.redirect('/v1/nodes')
     }
 })
 
@@ -101,7 +105,7 @@ async function getFromDan() {
 
 }
 /**
- * Request ips from torProject
+ * Request IPs from torProject
  */
 async function getFromTorProject() {
     console.log("Getting IPs from https://onionoo.torproject.org/summary?limit=5000")
@@ -123,7 +127,7 @@ async function getFromTorProject() {
             })
         })
     }).catch(err => {
-        console.log("An error has occourred" + err)
+        console.log("An error has occourred: " + err)
     })
 }
 /**
@@ -136,7 +140,7 @@ function replacer(element) {
 }
 /**
  * Checks is the IP is already on the list and, if not, add them to it
- * @param {*} element ip to add
+ * @param {*} element IP to add
  */
 function redundancyChecker(element) {
     //This variable stay true while the loop don't find any equal IP
