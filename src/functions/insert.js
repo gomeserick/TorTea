@@ -21,11 +21,11 @@ function insert(element, Model) {
         upsert: true
     };
     //checks if the element is null
-    if (!validate(element)) return;
+    if (!validate(element)) return false;
     // Query Function
     Model.findOneAndUpdate(filter, update, options).catch(error =>
         console.log(error))
-
+    return true;
 }
 
 

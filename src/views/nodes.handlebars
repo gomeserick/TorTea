@@ -1,0 +1,42 @@
+<div class="mt-4">
+    <form class="form-inline" action="/v1/nodes/remove" method="POST">
+        <div class="input-group mt-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
+            </div>
+            <input type="text" class="form-control" placeholder="IP" name="ip" id="ip">                
+        </div>
+        <a href="/v1/nodes/ips"> <button type="submit" class="btn btn-primary mt-2 mr-sm-2">Send</button></a>
+    </form>
+        <a href="/v1/nodes/ips"> <button type="text" class="btn btn-primary mt-2">IP List</button></a>
+        <a href="/v1/nodes/allips"> <button type="text" class="btn btn-primary mt-2">Every IP List</button></a>
+</div>
+
+<div class="table-responsive mt-2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>URL</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td>GET</td>
+      <td>/v1/nodes/allips</td>
+      <td>Gets ALL IPs we track</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/</td>
+      <td>Send a non wanted IP to filter it from the third endpoint</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/v1/nodes/ips</td>
+      <td>Sends all tracked IPs, except the ones send by the POST method</td>
+    </tr>
+  </tbody>
+    </table>
+</div>

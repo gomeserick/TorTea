@@ -1,8 +1,14 @@
+//Importing modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
+
+//Port to be listen to
+const port = process.env.PORT || 8080;
+
+console.log(`Listening on localhost:${port}`)
 
 const app = express();
 
@@ -31,7 +37,8 @@ const app = express();
         })
         mongoose.Promise = global.Promise;
 
-
+//Import routes
 require('./routes/nodes.js')(app)
+require('./routes/main.js')(app)
 
-app.listen(3000);
+app.listen(port);
