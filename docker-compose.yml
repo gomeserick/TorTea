@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+    tortea:
+        container_name: tortea
+        build: .
+        restart: always
+        env_file:
+            - .env
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        depends_on:
+            - db
+        links:
+            - db
+        ports:
+            - 4000:${APP_PORT}
+        command: npm run start
+        networks:
+          - mern-app
+
+    db:
+        image: mongo:latest
+        container_name: db
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - '27017:${DB_PORT}'
+        volumes:
+            - dbdata-volume:/data/db
+        environment:
+            MONGO_INITDB_USERNAME: ${DB_USERNAME}
+            MONGO_INITDB_PASSWORD: ${DB_PASSWORD}
+            MONGO_INITDB_DATABASE: ${DB_DATABASE}
+        networks:
+          - mern-app
+networks:
+  mern-app:
+    driver: bridge
+volumes:
+    dbdata-volume:

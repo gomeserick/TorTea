@@ -91,7 +91,7 @@ async function getFromDan() {
     console.log("Getting IPs from https://www.dan.me.uk/torlist/")
 
     // Request the data from https://www.dan.me.uk/torlist/
-    await axios.get( 'https://www.dan.me.uk/torlist/' ).then(res => {
+    try{await axios.get( /*'https://www.dan.me.uk/torlist/'*/ ).then(res => {
         //dan.me.uk doesn't give information in json, so this is necessary
         const data = res.data.split("\n")
         //Checks if each element is alredy present in the ipList and push it in if not
@@ -101,6 +101,9 @@ async function getFromDan() {
     }).catch(err => {
         console.log(err)
     })
+    } catch (err) {
+        console.log(err)
+    } 
 
 
 }

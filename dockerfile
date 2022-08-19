@@ -1,15 +1,6 @@
-FROM node:16
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install
-
+FROM node:alpine
+WORKDIR /usr/src/app
+COPY package*.json .
+RUN npm ci
 COPY . .
-
-ENV PORT=8080 KEY=DEFAULT
-
-EXPOSE 8080
-
 CMD ["npm", "start"]

@@ -3,18 +3,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 const path = require('path');
-const mongoose = require('mongoose');
 const flash = require('connect-flash')
 const session = require('express-session')
-
+const dotenv = require('dotenv').config();
 //Port to be listen to
-const port = process.env.PORT || 8080;
+const port = process.env.APP_PORT || 8080;
 api_key = process.env.KEY || "debugging"
 
 console.log(`Listening on localhost:${port}`)
 
 const app = express();
 
+require('./mongo')
 
 
 //config
@@ -50,12 +50,6 @@ const app = express();
     app.set('views', path.join(__dirname, 'views'))
 
     //Mongoose
-    mongoose.connect("mongodb://localhost/TeaBag").then(() =>{
-            console.log("Mongo connected");
-        }).catch((erro) => {
-            console.log("Error trying to connect mongo: " + erro)
-        })
-        mongoose.Promise = global.Promise;
 
 //Import routes
 require('./routes/nodes.js')(app)
